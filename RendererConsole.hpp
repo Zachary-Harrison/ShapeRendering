@@ -83,16 +83,16 @@ void RendererConsole<P, D>::render(const Shape<P, D>& shape)
     }
 
     // In theory, the shape should already be centered in the console.
-    for (int i = 0; i < _screen.height(); i++)
+    for (int j = 0; j < _screen.height(); j++)
     {
-        for (int j = 0; j < _screen.width(); j++)
+        for (int i = 0; i < _screen.width(); i++)
         {
             // Display only chars that have changed
-            if (_buffer[i][j] != _prevBuffer[i][j])
+            if (_buffer[j][i] != _prevBuffer[j][i])
             {
                 // Start at (1, 1) in case of Windows user
-                rlutil::locate(j + 1, i + 1);
-                std::cout << _buffer[i][j];
+                rlutil::locate(i + 1, j + 1);
+                std::cout << _buffer[j][i];
             }
         }
     }
