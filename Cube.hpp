@@ -72,64 +72,19 @@ template <typename P, typename D>
 void Cube<P, D>::update(double xAngle, double yAngle, double zAngle)
 {
 
-    // Rotation matrix for x-axis
-    Matrix3x3<double> rotX = {
-        { 1, 0, 0 },
-        { 0, cos(xAngle), -sin(xAngle) },
-        { 0, sin(xAngle), cos(xAngle) }
-    };
-
-    // Rotation matrix for y-axis
-    Matrix3x3<double> rotY = {
-        { cos(yAngle), 0, sin(yAngle) },
-        { 0, 1, 0 },
-        { -sin(yAngle), 0, cos(yAngle) }
-    };
-
-    // Rotation matrix for z-axis
-    Matrix3x3<double> rotZ = {
-        { cos(zAngle), -sin(zAngle), 0 },
-        { sin(zAngle), cos(zAngle), 0 },
-        { 0, 0, 1 }
-    };
+    Matrix3x3<double> rotX = Matrix3x3<double>::rotationX(xAngle);
+    Matrix3x3<double> rotY = Matrix3x3<double>::rotationY(yAngle);
+    Matrix3x3<double> rotZ = Matrix3x3<double>::rotationZ(zAngle);
 
     Matrix3x3<double> rot = rotZ * rotY * rotX;
 
-    // Create a new list to store the updated vectors
     std::vector<Vector<P, D>> newData;
-
-    // Rotate the points and their directions (surface normals)
+    // Rotate the points and their surface normals
     for (const Vector<P, D>& vector : this->_origData)
     {
         Vector<P, D> newVector;
         newVector.position = rot * vector.position;
         newVector.direction = rot * vector.direction;
-        // float sinA = sin(xAngle);
-        // float cosA = cos(xAngle);
-        // float sinB = sin(yAngle);
-        // float cosB = cos(yAngle);
-        // float sinC = sin(zAngle);
-        // float cosC = cos(zAngle);
-
-        // newVector.position.x = vector.position.y * sinA * sinB * cosC - vector.position.z * cosA * sinB * cosC +
-        //                        vector.position.y * cosA * sinC + vector.position.z * sinA * sinC + vector.position.x * cosB * cosC;
-
-        // newVector.position.y = vector.position.y * cosA * cosC + vector.position.z * sinA * cosC -
-        //                        vector.position.y * sinA * sinB * sinC + vector.position.z * cosA * sinB * sinC -
-        //                        vector.position.x * cosB * sinC;
-
-        // newVector.position.z = vector.position.z * cosA * cosB - vector.position.y * sinA * cosB + vector.position.x * sinB;
-
-        // newVector.direction.x = vector.direction.y * sinA * sinB * cosC - vector.direction.z * cosA * sinB * cosC +
-        //                         vector.direction.y * cosA * sinC + vector.direction.z * sinA * sinC + vector.direction.x * cosB * cosC;
-
-        // newVector.direction.y = vector.direction.y * cosA * cosC + vector.direction.z * sinA * cosC -
-        //                         vector.direction.y * sinA * sinB * sinC + vector.direction.z * cosA * sinB * sinC -
-        //                         vector.direction.x * cosB * sinC;
-
-        // newVector.direction.z = vector.direction.z * cosA * cosB - vector.direction.y * sinA * cosB + vector.direction.x * sinB;
-
-        // Add the updated vector to the new list
         newData.push_back(newVector);
     }
 

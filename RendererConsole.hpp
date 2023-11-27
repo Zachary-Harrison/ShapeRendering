@@ -48,6 +48,8 @@ RendererConsole<P, D>::RendererConsole(Vector<P, D> camera, Vector<P, D> lightso
     // normalizing direction vectors
     _camera.direction = _camera.direction.normalized();
     _lightsource.direction = _lightsource.direction.normalized();
+
+    _prevBuffer = std::vector<std::vector<char>>(_screen.height(), std::vector<char>(_screen.width(), ' '));
 }
 
 template <typename P, typename D>
@@ -80,20 +82,20 @@ void RendererConsole<P, D>::render(const Shape<P, D>& shape)
         }
     }
 
-    //  Display only chars that have changed
+    // In theory, the shape should already be centered in the console.
     for (int i = 0; i < _screen.height(); i++)
     {
         for (int j = 0; j < _screen.width(); j++)
         {
-            if (_prevBuffer.empty() || _buffer[i][j] != _prevBuffer[i][j])
+            // Display only chars that have changed
+            if (_buffer[i][j] != _prevBuffer[i][j])
             {
-                // windows console starts at 1,1; linux is 0,0. So start at 1,1 for safety.
-                rlutil::locate(i + 1, j + 1);
+                // Start at (1, 1) in case of Windows user
+                rlutil::locate(j + 1, i + 1);
                 std::cout << _buffer[i][j];
             }
         }
     }
-
     _prevBuffer = _buffer;
 }
 

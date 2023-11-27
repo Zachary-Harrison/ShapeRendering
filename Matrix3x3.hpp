@@ -1,5 +1,7 @@
 #include "Triple.hpp"
 
+#include <initializer_list>
+
 template <typename T>
 class Matrix3x3
 {
@@ -17,26 +19,66 @@ class Matrix3x3
         }
     }
 
-    Matrix3x3(std::initializer_list<std::initializer_list<T>> list);
+    Matrix3x3(std::initializer_list<std::initializer_list<T>> list)
+    {
+        int i = 0;
+        for (const auto& l : list)
+        {
+            int j = 0;
+            for (const auto& element : l)
+            {
+                m[i][j] = element;
+                ++j;
+            }
+            ++i;
+        }
+    }
     Matrix3x3 operator*(const Matrix3x3& other) const;
     Triple<T> operator*(const Triple<T>& v) const;
+
+    static Matrix3x3<T> rotationX(T angle)
+    {
+        return {
+            { 1, 0, 0 },
+            { 0, cos(angle), -sin(angle) },
+            { 0, sin(angle), cos(angle) }
+        };
+    }
+
+    static Matrix3x3<T> rotationY(T angle)
+    {
+        return {
+            { cos(angle), 0, sin(angle) },
+            { 0, 1, 0 },
+            { -sin(angle), 0, cos(angle) }
+        };
+    }
+
+    static Matrix3x3<T> rotationZ(T angle)
+    {
+        return {
+            { cos(angle), -sin(angle), 0 },
+            { sin(angle), cos(angle), 0 },
+            { 0, 0, 1 }
+        };
+    }
 };
 
-template <typename T>
-Matrix3x3<T>::Matrix3x3(std::initializer_list<std::initializer_list<T>> list)
-{
-    int i = 0;
-    for (const auto& l : list)
-    {
-        int j = 0;
-        for (const auto& element : l)
-        {
-            m[i][j] = element;
-            ++j;
-        }
-        ++i;
-    }
-}
+// template <typename T>
+// Matrix3x3<T>::Matrix3x3(std::initializer_list<std::initializer_list<T>> list)
+// {
+//     int i = 0;
+//     for (const auto& l : list)
+//     {
+//         int j = 0;
+//         for (const auto& element : l)
+//         {
+//             m[i][j] = element;
+//             ++j;
+//         }
+//         ++i;
+//     }
+// }
 
 template <typename T>
 Matrix3x3<T> Matrix3x3<T>::operator*(const Matrix3x3& other) const
