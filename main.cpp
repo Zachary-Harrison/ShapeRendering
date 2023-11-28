@@ -51,7 +51,7 @@ int main()
             zAngle = (zAngle > TAU) ? zAngle - TAU : zAngle;
 
             renderer.render(*currentShape); // not sure if this is allowed due to unique_pointer
-            // std::this_thread::sleep_for(std::chrono::milliseconds(10));
+             std::this_thread::sleep_for(std::chrono::milliseconds(10));
             std::cout.flush(); // force console changes to render
         }
 
