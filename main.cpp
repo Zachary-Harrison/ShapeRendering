@@ -2,6 +2,7 @@
 #include "RendererConsole.hpp"
 #include "Screen.hpp"
 #include "Shape.hpp"
+#include "Torus.hpp"
 #include "Vector.hpp"
 #include "rlutil.h"
 
@@ -24,12 +25,19 @@ int main()
     double Z_ANGLE_INCREMENT = 0.01;
 
     Vector<double, double> camera{ 0, 0, 0, 0, 0, 1 };
-    Vector<double, double> lightsource{ 0, 0, 0, 0, 0, 1 }; // pointed directly at the shape
-    // Vector<double, double> lightsource{ 0, 50, 0, 0, -0.7071, 0.7071 }; // pointed above the shape
-    Triple<double> shapeCenter{ 0, 0, 110 };
-    Screen screen{ 120, 30, 40 };
+    // Triple<double> lightsource{ 0, 0, 1 }; // pointed directly at the shape
+    Triple<double> lightsource{ 0, -1, 1 }; // above the shape, pointed at it
+    Triple<double> shapeCenter{ 0, 0, 40 };
+    Screen screen{ 80, 30, 20 };
     RendererConsole renderer{ camera, lightsource, screen, shapeCenter };
-    std::unique_ptr<Shape<double, double>> currentShape = std::make_unique<Cube<double, double>>(40, shapeCenter);
+
+    std::vector<std::unique_ptr<Shape<double, double>>> shapes;
+    shapes.push_back(std::make_unique<Cube<double, double>>(30, shapeCenter));
+    shapes.push_back(std::make_unique<Torus<double, double>>(8, 18, shapeCenter));
+    int currentShapeIndex = 0;
+
+    std::unique_ptr<Shape<double, double>> currentShape = std::make_unique<Cube<double, double>>(30, shapeCenter); // cube
+    //  std::unique_ptr<Shape<double, double>> currentShape = std::make_unique<Torus<double, double>>(8, 18, shapeCenter);
 
     currentShape->update(0, 0, 0);
     rlutil::hidecursor();
@@ -42,7 +50,7 @@ int main()
         // update render loop
         if (!renderer.isPaused())
         {
-            currentShape->update(xAngle, yAngle, zAngle);
+            shapes[currentShapeIndex]->update(xAngle, yAngle, zAngle);
             xAngle += X_ANGLE_INCREMENT;
             xAngle = (xAngle > TAU) ? xAngle - TAU : xAngle;
             yAngle += Y_ANGLE_INCREMENT;
@@ -50,15 +58,18 @@ int main()
             zAngle += Z_ANGLE_INCREMENT;
             zAngle = (zAngle > TAU) ? zAngle - TAU : zAngle;
 
-            renderer.render(*currentShape); // not sure if this is allowed due to unique_pointer
-             std::this_thread::sleep_for(std::chrono::milliseconds(10));
+            renderer.render((*shapes[currentShapeIndex]));
             std::cout.flush(); // force console changes to render
+
+            // sleep for a bit cuz our update/render loop is giga fast
+            std::this_thread::sleep_for(std::chrono::milliseconds(10));
         }
 
         // handle user input
         if (kbhit())
         {
             int key = rlutil::getkey();
+
             if (key == rlutil::KEY_ESCAPE)
             {
                 done = true;
@@ -66,6 +77,20 @@ int main()
             else if (key == rlutil::KEY_SPACE)
             {
                 renderer.togglePause();
+            }
+            else if (key == rlutil::KEY_LEFT)
+            {
+                currentShapeIndex = (currentShapeIndex - 1 + shapes.size()) % shapes.size();
+                xAngle = 0.0;
+                yAngle = 0.0;
+                zAngle = 0.0;
+            }
+            else if (key == rlutil::KEY_RIGHT)
+            {
+                currentShapeIndex = (currentShapeIndex + 1) % shapes.size();
+                xAngle = 0.0;
+                yAngle = 0.0;
+                zAngle = 0.0;
             }
         }
     }

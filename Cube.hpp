@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Matrix3x3.hpp"
 #include "Shape.hpp"
 #include "Triple.hpp"
@@ -9,20 +11,15 @@ class Cube : public Shape<P, D>
     Cube(P sideLength, Triple<P> center);
 
     Cube(P sideLength, P initialX, P initialY, P initialZ);
-
-    void update(double xAngle, double yAngle, double zAngle) override;
-
-  private:
-    std::vector<Vector<P, D>> _origData;
 };
 
 template <typename P, typename D>
 Cube<P, D>::Cube(P sideLength, Triple<P> center)
 {
-    this->setCenter(center);
+    static_assert(std::is_arithmetic<P>::value, "Type P must be arithmetic");
+    static_assert(std::is_arithmetic<D>::value, "Type D must be arithmetic");
+    this->Center = center;
 
-    static_assert(std::is_arithmetic<P>::value, "Type T must be arithmetic");
-    static_assert(std::is_arithmetic<D>::value, "Type R must be arithmetic");
     P halfLen = sideLength / 2;
 
     // Normals for x faces
@@ -66,28 +63,4 @@ template <typename P, typename D>
 Cube<P, D>::Cube(P sideLength, P initialX, P initialY, P initialZ) :
     Cube(sideLength, Triple<P>{ initialX, initialY, initialZ })
 {
-}
-
-template <typename P, typename D>
-void Cube<P, D>::update(double xAngle, double yAngle, double zAngle)
-{
-
-    Matrix3x3<double> rotX = Matrix3x3<double>::rotationX(xAngle);
-    Matrix3x3<double> rotY = Matrix3x3<double>::rotationY(yAngle);
-    Matrix3x3<double> rotZ = Matrix3x3<double>::rotationZ(zAngle);
-
-    Matrix3x3<double> rot = rotZ * rotY * rotX;
-
-    std::vector<Vector<P, D>> newData;
-    // Rotate the points and their surface normals
-    for (const Vector<P, D>& vector : this->_origData)
-    {
-        Vector<P, D> newVector;
-        newVector.position = rot * vector.position;
-        newVector.direction = rot * vector.direction;
-        newData.push_back(newVector);
-    }
-
-    // Update data
-    this->_data = newData;
 }

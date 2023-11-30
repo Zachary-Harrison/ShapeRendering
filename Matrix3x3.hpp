@@ -1,3 +1,5 @@
+#pragma once
+
 #include "Triple.hpp"
 
 #include <initializer_list>
@@ -33,52 +35,58 @@ class Matrix3x3
             ++i;
         }
     }
+
     Matrix3x3 operator*(const Matrix3x3& other) const;
     Triple<T> operator*(const Triple<T>& v) const;
 
     static Matrix3x3<T> rotationX(T angle)
     {
+        // return {
+        //     { 1, 0, 0 },
+        //     { 0, cos(angle), -sin(angle) },
+        //     { 0, sin(angle), cos(angle) }
+        // };
+        T sinX = sin(angle);
+        T cosX = cos(angle);
         return {
             { 1, 0, 0 },
-            { 0, cos(angle), -sin(angle) },
-            { 0, sin(angle), cos(angle) }
+            { 0, cosX, -sinX },
+            { 0, sinX, cosX }
         };
     }
 
     static Matrix3x3<T> rotationY(T angle)
     {
+        // return {
+        //     { cos(angle), 0, sin(angle) },
+        //     { 0, 1, 0 },
+        //     { -sin(angle), 0, cos(angle) }
+        // };
+        T sinY = sin(angle);
+        T cosY = cos(angle);
         return {
-            { cos(angle), 0, sin(angle) },
+            { cosY, 0, sinY },
             { 0, 1, 0 },
-            { -sin(angle), 0, cos(angle) }
+            { -sinY, 0, cosY }
         };
     }
 
     static Matrix3x3<T> rotationZ(T angle)
     {
+        // return {
+        //     { cos(angle), -sin(angle), 0 },
+        //     { sin(angle), cos(angle), 0 },
+        //     { 0, 0, 1 }
+        // };
+        T sinZ = sin(angle);
+        T cosZ = cos(angle);
         return {
-            { cos(angle), -sin(angle), 0 },
-            { sin(angle), cos(angle), 0 },
+            { cosZ, -sinZ, 0 },
+            { sinZ, cosZ, 0 },
             { 0, 0, 1 }
         };
     }
 };
-
-// template <typename T>
-// Matrix3x3<T>::Matrix3x3(std::initializer_list<std::initializer_list<T>> list)
-// {
-//     int i = 0;
-//     for (const auto& l : list)
-//     {
-//         int j = 0;
-//         for (const auto& element : l)
-//         {
-//             m[i][j] = element;
-//             ++j;
-//         }
-//         ++i;
-//     }
-// }
 
 template <typename T>
 Matrix3x3<T> Matrix3x3<T>::operator*(const Matrix3x3& other) const

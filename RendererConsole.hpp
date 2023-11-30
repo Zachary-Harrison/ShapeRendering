@@ -14,12 +14,12 @@ template <typename P, typename D> // P = PositionType, D = DirectionType
 class RendererConsole : public Renderer<P, D>
 {
   public:
-    RendererConsole(Vector<P, D> camera, Vector<P, D> lightsource, Screen screen, Triple<P> shapeCenter);
+    RendererConsole(Vector<P, D> camera, Triple<D> lightsource, Screen screen, Triple<P> shapeCenter);
     void render(const Shape<P, D>& shape) override;
 
   private:
     Vector<P, D> _camera;
-    Vector<P, D> _lightsource;
+    Triple<D> _lightsource;
     Screen _screen;
     std::string _luminanceChars = ".,-~:;=!*#$@";
     double K_1;
@@ -32,7 +32,7 @@ class RendererConsole : public Renderer<P, D>
 };
 
 template <typename P, typename D>
-RendererConsole<P, D>::RendererConsole(Vector<P, D> camera, Vector<P, D> lightsource, Screen screen, Triple<P> shapeCenter) :
+RendererConsole<P, D>::RendererConsole(Vector<P, D> camera, Triple<D> lightsource, Screen screen, Triple<P> shapeCenter) :
     _camera(camera), _lightsource(lightsource), _screen(screen)
 {
     static_assert(std::is_arithmetic<P>::value, "Type T must be arithmetic");
@@ -47,7 +47,7 @@ RendererConsole<P, D>::RendererConsole(Vector<P, D> camera, Vector<P, D> lightso
 
     // normalizing direction vectors
     _camera.direction = _camera.direction.normalized();
-    _lightsource.direction = _lightsource.direction.normalized();
+    _lightsource = _lightsource.normalized();
 
     _prevBuffer = std::vector<std::vector<char>>(_screen.height(), std::vector<char>(_screen.width(), ' '));
 }
@@ -60,10 +60,6 @@ void RendererConsole<P, D>::render(const Shape<P, D>& shape)
     for (auto& vector : shape.data())
     {
         double luminance = getLuminance(vector);
-        if (luminance < 0)
-        {
-            continue;
-        }
 
         double ooz = 1 / (K_2 + vector.position.z); // "one over z"
         // projecting the 3D shape onto the 2D screen
@@ -75,8 +71,7 @@ void RendererConsole<P, D>::render(const Shape<P, D>& shape)
             if (ooz > _zBuffer[y_proj][x_proj])
             {
                 _zBuffer[y_proj][x_proj] = ooz;
-
-                int lumIdx = static_cast<int>(round(luminance * (_luminanceChars.size() - 1)));
+                int lumIdx = static_cast<int>(luminance * (_luminanceChars.size() - 1));
                 _buffer[y_proj][x_proj] = _luminanceChars[lumIdx];
             }
         }
@@ -103,5 +98,6 @@ template <typename P, typename D>
 double RendererConsole<P, D>::getLuminance(const Vector<P, D>& vector)
 {
     Triple<D> v_norm = vector.direction.normalized();
-    return v_norm.x * _lightsource.direction.x + v_norm.y * _lightsource.direction.y + v_norm.z * _lightsource.direction.z;
+    double result = v_norm.x * _lightsource.x + v_norm.y * _lightsource.y + v_norm.z * _lightsource.z;
+    return (result > 0) ? result : -result; // equivalent to abs(result);
 }

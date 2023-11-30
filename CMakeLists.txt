@@ -12,6 +12,7 @@ set(HEADER_FILES
 	Triple.hpp
 	Shape.hpp
 	Cube.hpp
+	Torus.hpp
 	Renderer.hpp
 	RendererConsole.hpp
 	rlutil.h
