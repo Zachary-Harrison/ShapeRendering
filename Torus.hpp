@@ -24,6 +24,7 @@ Torus<P, D>::Torus(P R_1, P R_2, Triple<P> center)
     static_assert(std::is_arithmetic<D>::value, "Type D must be arithmetic");
     this->Center = center;
 
+    // generate circle of radius R_1
     for (double xAngle = 0; xAngle < TAU; xAngle += 0.05)
     {
         P sinX = sin(xAngle);
@@ -31,27 +32,12 @@ Torus<P, D>::Torus(P R_1, P R_2, Triple<P> center)
 
         P circleX = R_2 + R_1 * cosX;
         P circleY = R_1 * sinX;
+        // rotate circle around y-axis using radius R_2
         for (double yAngle = 0; yAngle < 2 * TAU; yAngle += 0.02)
         {
-            P sinY = sin(yAngle);
-            P cosY = cos(yAngle);
-            Triple<P> pos{
-                cosY * circleX,
-                circleY,
-                -sinY * circleX
-            };
-            Triple<D> normal{
-                cosY * cosX,
-                sinX,
-                -sinY * cosX
-            };
-            // Matrix3x3<double> rotY{
-            //     { cosY, 0, sinY },
-            //     { 0, 1, 0 },
-            //     { -sinY, 0, cosY }
-            // };
-            //  Triple<P> pos = rotY * Triple<P>{ circleX, circleY, circleX };
-            //  Triple<D> normal = rotY * Triple<D>{ cosX, cosY, 0 };
+            Matrix3x3<double> rotY = Matrix3x3<double>::rotationY(yAngle);
+            Triple<P> pos = rotY * Triple<P>{ circleX, circleY, 0 };
+            Triple<P> normal = rotY * Triple<P>{ -cosX, -sinX, 0 };
             this->_origData.push_back(Vector<P, P>{ pos, normal });
         }
     }

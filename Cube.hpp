@@ -22,39 +22,25 @@ Cube<P, D>::Cube(P sideLength, Triple<P> center)
 
     P halfLen = sideLength / 2;
 
-    // Normals for x faces
     Triple<D> posXNormal{ 1, 0, 0 };
     Triple<D> negXNormal{ -1, 0, 0 };
-    for (P y = -halfLen; y <= halfLen; y += 1)
-    {
-        for (P z = -halfLen; z <= halfLen; z += 1)
-        {
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ -halfLen, y, z }, posXNormal));
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ halfLen, y, z }, negXNormal));
-        }
-    }
-
-    // Normals for y faces
     Triple<D> posYNormal{ 0, 1, 0 };
     Triple<D> negYNormal{ 0, -1, 0 };
-    for (P x = -halfLen; x <= halfLen; x += 1)
-    {
-        for (P z = -halfLen; z <= halfLen; z += 1)
-        {
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ x, -halfLen, z }, posYNormal));
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ x, halfLen, z }, negYNormal));
-        }
-    }
-
-    // Normals for z faces
     Triple<D> posZNormal{ 0, 0, 1 };
     Triple<D> negZNormal{ 0, 0, -1 };
-    for (P x = -halfLen; x <= halfLen; x += 1)
+    for (P i = -halfLen; i <= halfLen; i += 0.75)
     {
-        for (P y = -halfLen; y <= halfLen; y += 1)
+        for (P j = -halfLen; j <= halfLen; j += 0.75)
         {
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ x, y, -halfLen }, posZNormal));
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ x, y, halfLen }, negZNormal));
+            // x faces
+            this->_origData.push_back(Vector<P, P>(Triple<P>{ -halfLen, i, j }, posXNormal));
+            this->_origData.push_back(Vector<P, P>(Triple<P>{ halfLen, i, j }, negXNormal));
+            // y faces
+            this->_origData.push_back(Vector<P, P>(Triple<P>{ i, -halfLen, j }, posYNormal));
+            this->_origData.push_back(Vector<P, P>(Triple<P>{ i, halfLen, j }, negYNormal));
+            // z faces
+            this->_origData.push_back(Vector<P, P>(Triple<P>{ i, j, -halfLen }, posZNormal));
+            this->_origData.push_back(Vector<P, P>(Triple<P>{ i, j, halfLen }, negZNormal));
         }
     }
 }

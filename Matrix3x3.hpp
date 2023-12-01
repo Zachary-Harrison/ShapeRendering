@@ -41,11 +41,6 @@ class Matrix3x3
 
     static Matrix3x3<T> rotationX(T angle)
     {
-        // return {
-        //     { 1, 0, 0 },
-        //     { 0, cos(angle), -sin(angle) },
-        //     { 0, sin(angle), cos(angle) }
-        // };
         T sinX = sin(angle);
         T cosX = cos(angle);
         return {
@@ -57,11 +52,6 @@ class Matrix3x3
 
     static Matrix3x3<T> rotationY(T angle)
     {
-        // return {
-        //     { cos(angle), 0, sin(angle) },
-        //     { 0, 1, 0 },
-        //     { -sin(angle), 0, cos(angle) }
-        // };
         T sinY = sin(angle);
         T cosY = cos(angle);
         return {
@@ -73,11 +63,6 @@ class Matrix3x3
 
     static Matrix3x3<T> rotationZ(T angle)
     {
-        // return {
-        //     { cos(angle), -sin(angle), 0 },
-        //     { sin(angle), cos(angle), 0 },
-        //     { 0, 0, 1 }
-        // };
         T sinZ = sin(angle);
         T cosZ = cos(angle);
         return {

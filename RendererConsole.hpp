@@ -60,6 +60,10 @@ void RendererConsole<P, D>::render(const Shape<P, D>& shape)
     for (auto& vector : shape.data())
     {
         double luminance = getLuminance(vector);
+        if (luminance < 0)
+        {
+            continue;
+        }
 
         double ooz = 1 / (K_2 + vector.position.z); // "one over z"
         // projecting the 3D shape onto the 2D screen
@@ -98,6 +102,8 @@ template <typename P, typename D>
 double RendererConsole<P, D>::getLuminance(const Vector<P, D>& vector)
 {
     Triple<D> v_norm = vector.direction.normalized();
+    // return v_norm.x * _lightsource.x + v_norm.y * _lightsource.y + v_norm.z * _lightsource.z;
     double result = v_norm.x * _lightsource.x + v_norm.y * _lightsource.y + v_norm.z * _lightsource.z;
-    return (result > 0) ? result : -result; // equivalent to abs(result);
+    // return (result > 0) ? result : -result; // equivalent to abs(result);
+    return (result > 0) ? result : 0; // equivalent to max(result, 0);
 }

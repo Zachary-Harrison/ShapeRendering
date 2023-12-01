@@ -1,4 +1,5 @@
 #include "Cube.hpp"
+#include "Pyramid.hpp"
 #include "RendererConsole.hpp"
 #include "Screen.hpp"
 #include "Shape.hpp"
@@ -14,37 +15,32 @@ int main()
 {
     double PI = 3.141592653589793238462643383279502884197169399375105820974944; // not sure how many digits to use
     double TAU = 2 * PI;
-    double xAngle = 0.0;
-    double yAngle = 0.0;
-    double zAngle = 0.0;
-    // double X_ANGLE_INCREMENT = 0.0;
-    // double Y_ANGLE_INCREMENT = 0.0;
-    // double Z_ANGLE_INCREMENT = 0.0;
+    // double X_ANGLE_INCREMENT = 0;
+    // double Y_ANGLE_INCREMENT = 0;
+    // double Z_ANGLE_INCREMENT = 0;
     double X_ANGLE_INCREMENT = 0.05;
     double Y_ANGLE_INCREMENT = 0.05;
     double Z_ANGLE_INCREMENT = 0.01;
 
     Vector<double, double> camera{ 0, 0, 0, 0, 0, 1 };
     // Triple<double> lightsource{ 0, 0, 1 }; // pointed directly at the shape
-    Triple<double> lightsource{ 0, -1, 1 }; // above the shape, pointed at it
-    Triple<double> shapeCenter{ 0, 0, 40 };
-    Screen screen{ 80, 30, 20 };
+    Triple<double> lightsource{ 0, -1, 1 }; // above the shape and to the left, pointed at it
+    // Triple<double> lightsource{ 0, 0, 1 }; // above the shape and to the left, pointed at it
+    Triple<double> shapeCenter{ 0, 0, 80 };
+    Screen screen{ 80, 30, 40 };
     RendererConsole renderer{ camera, lightsource, screen, shapeCenter };
 
     std::vector<std::unique_ptr<Shape<double, double>>> shapes;
     shapes.push_back(std::make_unique<Cube<double, double>>(30, shapeCenter));
-    shapes.push_back(std::make_unique<Torus<double, double>>(8, 18, shapeCenter));
+    shapes.push_back(std::make_unique<Torus<double, double>>(7, 15, shapeCenter));
+    shapes.push_back(std::make_unique<Pyramid<double, double>>(20, 30, 20, shapeCenter));
     int currentShapeIndex = 0;
 
-    std::unique_ptr<Shape<double, double>> currentShape = std::make_unique<Cube<double, double>>(30, shapeCenter); // cube
-    //  std::unique_ptr<Shape<double, double>> currentShape = std::make_unique<Torus<double, double>>(8, 18, shapeCenter);
-
-    currentShape->update(0, 0, 0);
+    double xAngle = 0;
+    double yAngle = 0;
+    double zAngle = 0;
     rlutil::hidecursor();
     rlutil::cls();
-
-    // renderer.togglePause();
-
     for (bool done = false; !done;)
     {
         // update render loop
