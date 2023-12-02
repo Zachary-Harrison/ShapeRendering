@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Triple.hpp"
+#include "../utils/Triple.hpp"
 
 #include <initializer_list>
 

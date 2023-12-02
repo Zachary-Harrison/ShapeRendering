@@ -1,9 +1,9 @@
 #include "Cylinder.hpp"
 
-#include "Matrix3x3.hpp"
-#include "Triple.hpp"
+#include "../utils/Matrix3x3.hpp"
+#include "../utils/Triple.hpp"
 
-Cylinder::Cylinder(double height, double radius, Triple<double> center)
+Cylinder::Cylinder(Triple<double> center, double height, double radius)
 {
     this->Center = center;
 
@@ -31,7 +31,7 @@ Cylinder::Cylinder(double height, double radius, Triple<double> center)
     }
 }
 
-Cylinder::Cylinder(double height, double radius, double initialX, double initialY, double initialZ) :
-    Cylinder(height, radius, Triple<double>{ initialX, initialY, initialZ })
+Cylinder::Cylinder(double centerX, double centerY, double centerZ, double height, double radius) :
+    Cylinder(Triple<double>{ centerX, centerY, centerZ }, height, radius)
 {
 }

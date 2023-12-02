@@ -6,27 +6,27 @@ set(UNIT_TEST_RUNNER UnitTestRunner)
 project(${PROJECT})
 
 set(HEADER_FILES 
-	Matrix3x3.hpp
-	Vector.hpp
 	Screen.hpp
-	Triple.hpp
-	Shape.hpp
-	Cube.hpp
-	Torus.hpp
-	Pyramid.hpp
-	Sphere.hpp
-	Cylinder.hpp
+	shapes/Shape.hpp
+	shapes/Cube.hpp
+	shapes/Torus.hpp
+	shapes/Pyramid.hpp
+	shapes/Sphere.hpp
+	shapes/Cylinder.hpp
 	Renderer.hpp
 	RendererConsole.hpp
-	rlutil.h
+	utils/rlutil.h
+	utils/Matrix3x3.hpp
+	utils/Vector.hpp
+	utils/Triple.hpp
 )
 set(SOURCE_FILES 
-	Shape.cpp
-	Cube.cpp
-	Torus.cpp
-	Pyramid.cpp
-	Sphere.cpp
-	Cylinder.cpp
+	shapes/Shape.cpp
+	shapes/Cube.cpp
+	shapes/Torus.cpp
+	shapes/Pyramid.cpp
+	shapes/Sphere.cpp
+	shapes/Cylinder.cpp
 	Screen.cpp
 )
 set(UNIT_TEST_FILES 

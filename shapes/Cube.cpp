@@ -1,9 +1,9 @@
 #include "Cube.hpp"
 
-#include "Matrix3x3.hpp"
-#include "Triple.hpp"
+#include "../utils/Matrix3x3.hpp"
+#include "../utils/Triple.hpp"
 
-Cube::Cube(double sideLength, Triple<double> center)
+Cube::Cube(Triple<double> center, double sideLength)
 {
     this->Center = center;
 
@@ -43,7 +43,7 @@ Cube::Cube(double sideLength, Triple<double> center)
     }
 }
 
-Cube::Cube(double sideLength, double initialX, double initialY, double initialZ) :
-    Cube(sideLength, Triple<double>{ initialX, initialY, initialZ })
+Cube::Cube(double centerX, double centerY, double centerZ, double sideLength) :
+    Cube(Triple<double>{ centerX, centerY, centerZ }, sideLength)
 {
 }

@@ -1,11 +1,11 @@
 #include "Pyramid.hpp"
 
-#include "Matrix3x3.hpp"
-#include "Triple.hpp"
+#include "../utils/Matrix3x3.hpp"
+#include "../utils/Triple.hpp"
 
 #include <cmath>
 
-Pyramid::Pyramid(double length, double width, double height, Triple<double> center)
+Pyramid::Pyramid(Triple<double> center, double length, double width, double height)
 {
     this->Center = center;
 
@@ -52,7 +52,7 @@ Pyramid::Pyramid(double length, double width, double height, Triple<double> cent
     }
 }
 
-Pyramid::Pyramid(double length, double width, double height, double initialX, double initialY, double initialZ) :
-    Pyramid(length, width, height, Triple<double>{ initialX, initialY, initialZ })
+Pyramid::Pyramid(double centerX, double centerY, double centerZ, double length, double width, double height) :
+    Pyramid(Triple<double>{ centerX, centerY, centerZ }, length, width, height)
 {
 }

@@ -1,11 +1,11 @@
 #include "Torus.hpp"
 
-#include "Matrix3x3.hpp"
-#include "Triple.hpp"
+#include "../utils/Matrix3x3.hpp"
+#include "../utils/Triple.hpp"
 
 #include <cmath>
 
-Torus::Torus(double R_1, double R_2, Triple<double> center)
+Torus::Torus(Triple<double> center, double R_1, double R_2)
 {
     this->Center = center;
 
@@ -30,7 +30,7 @@ Torus::Torus(double R_1, double R_2, Triple<double> center)
     }
 }
 
-Torus::Torus(double R_1, double R_2, double initialX, double initialY, double initialZ) :
-    Torus(R_1, R_2, Triple<double>{ initialX, initialY, initialZ })
+Torus::Torus(double centerX, double centerY, double centerZ, double R_1, double R_2) :
+    Torus(Triple<double>{ centerX, centerY, centerZ }, R_1, R_2)
 {
 }

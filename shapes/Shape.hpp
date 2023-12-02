@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Vector.hpp"
+#include "../utils/Vector.hpp"
 
 #include <vector>
 
@@ -10,7 +10,7 @@ class Shape
     Triple<double> Center;
     Shape();
 
-    Shape(const std::vector<Vector<double, double>>& data, Triple<double> center);
+    Shape(Triple<double> center, const std::vector<Vector<double, double>>& data);
 
     Shape(const Shape& shape);
 

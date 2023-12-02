@@ -1,21 +1,21 @@
 #include "Shape.hpp"
 
-#include "Matrix3x3.hpp"
+#include "../utils/Matrix3x3.hpp"
 
 #include <cmath>
 
 Shape::Shape() :
-    _data{}, Center{ 0, 0, 0 } // Initialize data to zeros
+    Center{ 0, 0, 0 }, _data{} // Initialize data to zeros
 {
 }
 
-Shape::Shape(const std::vector<Vector<double, double>>& data, Triple<double> center) :
-    _data(data), Center(center)
+Shape::Shape(Triple<double> center, const std::vector<Vector<double, double>>& data) :
+    Center(center), _data(data)
 {
 }
 
 Shape::Shape(const Shape& shape) :
-    _data(shape.data()), Center(shape.Center)
+    Center(shape.Center), _data(shape.data())
 {
 }
 

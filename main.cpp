@@ -1,21 +1,31 @@
-#include "Cube.hpp"
-#include "Cylinder.hpp"
-#include "Pyramid.hpp"
 #include "RendererConsole.hpp"
 #include "Screen.hpp"
-#include "Shape.hpp"
-#include "Sphere.hpp"
-#include "Torus.hpp"
-#include "Vector.hpp"
-#include "rlutil.h"
+#include "shapes/Cube.hpp"
+#include "shapes/Cylinder.hpp"
+#include "shapes/Pyramid.hpp"
+#include "shapes/Shape.hpp"
+#include "shapes/Sphere.hpp"
+#include "shapes/Torus.hpp"
+#include "utils/Vector.hpp"
+#include "utils/rlutil.h"
 
 #include <array>
 #include <chrono>
+#include <csignal>
 #include <cstdint>
 #include <thread>
 
+void signalHandler(int signum)
+{
+    rlutil::cls(); // clear the console
+    exit(signum);
+}
+
 int main()
 {
+    // Handles Ctrl + C
+    std::signal(SIGINT, signalHandler);
+
     // Keep these multiples of each other so that all sides are seen and rotation feels cyclic and rhythmic
     double X_ANGLE = 0.03;
     double Y_ANGLE = 0.02;
@@ -29,11 +39,11 @@ int main()
 
     // Generating the list of shapes
     std::vector<std::unique_ptr<Shape>> shapes;
-    shapes.push_back(std::make_unique<Cube>(30, shapeCenter));
-    shapes.push_back(std::make_unique<Torus>(7, 15, shapeCenter));
-    shapes.push_back(std::make_unique<Pyramid>(30, 40, 30, shapeCenter));
-    shapes.push_back(std::make_unique<Sphere>(20, shapeCenter));
-    shapes.push_back(std::make_unique<Cylinder>(30, 15, shapeCenter));
+    shapes.push_back(std::make_unique<Cube>(shapeCenter, 30));
+    shapes.push_back(std::make_unique<Torus>(shapeCenter, 7, 15));
+    shapes.push_back(std::make_unique<Pyramid>(shapeCenter, 30, 40, 30));
+    shapes.push_back(std::make_unique<Sphere>(shapeCenter, 20));
+    shapes.push_back(std::make_unique<Cylinder>(shapeCenter, 30, 15));
     int currentShapeIndex = 0;
 
     rlutil::hidecursor();

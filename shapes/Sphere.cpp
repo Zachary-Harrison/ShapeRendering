@@ -1,11 +1,11 @@
 #include "Sphere.hpp"
 
-#include "Matrix3x3.hpp"
-#include "Triple.hpp"
+#include "../utils/Matrix3x3.hpp"
+#include "../utils/Triple.hpp"
 
 #include <cmath>
 
-Sphere::Sphere(double Radius, Triple<double> center)
+Sphere::Sphere(Triple<double> center, double Radius)
 {
     this->Center = center;
 
@@ -24,7 +24,7 @@ Sphere::Sphere(double Radius, Triple<double> center)
     }
 }
 
-Sphere::Sphere(double Radius, double initialX, double initialY, double initialZ) :
-    Sphere(Radius, Triple<double>{ initialX, initialY, initialZ })
+Sphere::Sphere(double centerX, double centerY, double centerZ, double Radius) :
+    Sphere(Triple<double>{ centerX, centerY, centerZ }, Radius)
 {
 }

@@ -1,6 +1,6 @@
 #pragma once
 
-#include "Shape.hpp"
+#include "shapes/Shape.hpp"
 
 template <typename P, typename D> // P = PositionType, D = DirectionType
 class Renderer

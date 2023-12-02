@@ -2,8 +2,8 @@
 
 #include "Renderer.hpp"
 #include "Screen.hpp"
-#include "Vector.hpp"
-#include "rlutil.h"
+#include "utils/Vector.hpp"
+#include "utils/rlutil.h"
 
 #include <array>
 #include <cstdint>
