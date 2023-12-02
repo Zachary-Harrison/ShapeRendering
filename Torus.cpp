@@ -24,8 +24,8 @@ Torus::Torus(double R_1, double R_2, Triple<double> center)
         for (double yAngle = 0; yAngle < TAU; yAngle += 0.02)
         {
             Matrix3x3<double> rotY = Matrix3x3<double>::rotationY(yAngle);
-            this->_origData.push_back(Vector<double, double>{ rotY * position,
-                                                              rotY * normal });
+            this->_data.push_back(Vector<double, double>{ rotY * position,
+                                                          rotY * normal });
         }
     }
 }

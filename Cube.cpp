@@ -14,9 +14,9 @@ Cube::Cube(double sideLength, Triple<double> center)
     {
         for (double y = -halfLen; y <= halfLen; y += 0.75)
         {
-            this->_origData.push_back(Vector<double, double>(Triple<double>{ x, y, halfLen },
+            this->_data.push_back(Vector<double, double>(Triple<double>{ x, y, halfLen },
                                                              Triple<double>{ 0, 0, 1 }));
-            this->_origData.push_back(Vector<double, double>(Triple<double>{ x, y, -halfLen },
+            this->_data.push_back(Vector<double, double>(Triple<double>{ x, y, -halfLen },
                                                              Triple<double>{ 0, 0, -1 }));
         }
     }
@@ -27,17 +27,17 @@ Cube::Cube(double sideLength, Triple<double> center)
         // x sides of hollow square
         for (double x = -halfLen; x <= halfLen; x += 0.75)
         {
-            this->_origData.push_back(Vector<double, double>(Triple<double>{ x, halfLen, z },
+            this->_data.push_back(Vector<double, double>(Triple<double>{ x, halfLen, z },
                                                              Triple<double>{ 0, 1, 0 }));
-            this->_origData.push_back(Vector<double, double>(Triple<double>{ x, -halfLen, z },
+            this->_data.push_back(Vector<double, double>(Triple<double>{ x, -halfLen, z },
                                                              Triple<double>{ 0, -1, 0 }));
         }
         // y sides of hollow square
         for (double y = -halfLen; y <= halfLen; y += 0.75)
         {
-            this->_origData.push_back(Vector<double, double>(Triple<double>{ halfLen, y, z },
+            this->_data.push_back(Vector<double, double>(Triple<double>{ halfLen, y, z },
                                                              Triple<double>{ 1, 0, 0 }));
-            this->_origData.push_back(Vector<double, double>(Triple<double>{ -halfLen, y, z },
+            this->_data.push_back(Vector<double, double>(Triple<double>{ -halfLen, y, z },
                                                              Triple<double>{ -1, 0, 0 }));
         }
     }

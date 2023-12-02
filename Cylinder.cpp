@@ -16,16 +16,16 @@ Cylinder::Cylinder(double height, double radius, Triple<double> center)
         // todouble andouble bottom of rectangle
         for (double y = 0; y <= radius; y += 0.75)
         {
-            this->_origData.push_back(Vector<double, double>{ rotZ * Triple<double>{ 0, y, halfHeight },
+            this->_data.push_back(Vector<double, double>{ rotZ * Triple<double>{ 0, y, halfHeight },
                                                               rotZ * Triple<double>{ 0, 0, 1 } });
-            this->_origData.push_back(Vector<double, double>{ rotZ * Triple<double>{ 0, y, -halfHeight },
+            this->_data.push_back(Vector<double, double>{ rotZ * Triple<double>{ 0, y, -halfHeight },
                                                               rotZ * Triple<double>{ 0, 0, -1 } });
         }
 
         // Rectangle side in the y-axis
         for (double z = -halfHeight; z <= halfHeight; z += 0.75)
         {
-            this->_origData.push_back(Vector<double, double>{ rotZ * Triple<double>{ 0, radius, z },
+            this->_data.push_back(Vector<double, double>{ rotZ * Triple<double>{ 0, radius, z },
                                                               rotZ * Triple<double>{ 0, 1, 0 } });
         }
     }

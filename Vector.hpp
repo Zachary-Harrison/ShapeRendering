@@ -12,7 +12,6 @@ class Vector
     Vector(P xPos, P yPos, P zPos, D xDir, D yDir, D zDir);
     Vector(const Triple<P>& position, const Triple<D>& direction);
     Vector(const Vector& vector);
-    P getLuminance(const Vector& other) const;
 
     Triple<P> position;
     Triple<D> direction;
@@ -45,10 +44,4 @@ Vector<P, D>::Vector(const Vector& vector) :
     position(vector.position), direction(vector.direction)
 {
     static_assert(std::is_arithmetic<P>::value, "Type T must be arithmetic");
-}
-
-template <typename P, typename D>
-P Vector<P, D>::getLuminance(const Vector<P, D>& lightsource) const
-{
-    return direction.x * lightsource.direction.x + direction.y * lightsource.direction.y + direction.z * lightsource.direction.z;
 }

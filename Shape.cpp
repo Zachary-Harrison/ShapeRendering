@@ -24,12 +24,11 @@ void Shape::update(double xAngle, double yAngle, double zAngle)
     Matrix3x3<double> rotX = Matrix3x3<double>::rotationX(xAngle);
     Matrix3x3<double> rotY = Matrix3x3<double>::rotationY(yAngle);
     Matrix3x3<double> rotZ = Matrix3x3<double>::rotationZ(zAngle);
-
     Matrix3x3<double> rot = rotZ * rotY * rotX;
 
     std::vector<Vector<double, double>> newData;
     // Rotate the points and their surface normals
-    for (const Vector<double, double>& vector : this->_origData)
+    for (const Vector<double, double>& vector : this->_data)
     {
         Vector<double, double> newVector;
         newVector.position = rot * vector.position;

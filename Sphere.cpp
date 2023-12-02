@@ -18,7 +18,7 @@ Sphere::Sphere(double Radius, Triple<double> center)
             double y = Radius * sin(phi) * sin(theta);
             double z = Radius * cos(phi);
 
-            this->_origData.push_back(Vector<double, double>(Triple<double>{ x, y, z },
+            this->_data.push_back(Vector<double, double>(Triple<double>{ x, y, z },
                                                              Triple<double>{ x / Radius, y / Radius, z / Radius }));
         }
     }
