@@ -15,16 +15,13 @@
 #include <cstdint>
 #include <thread>
 
-void signalHandler(int signum)
-{
-    rlutil::cls(); // clear the console
-    exit(signum);
-}
-
 int main()
 {
-    // Handles Ctrl + C
-    std::signal(SIGINT, signalHandler);
+    // Handles Ctrl + C exit behavior
+    std::signal(SIGINT, [](int signum) {
+        rlutil::cls(); // clear the console
+        exit(signum);
+    });
 
     // Keep these multiples of each other so that all sides are seen and rotation feels cyclic and rhythmic
     double X_ANGLE = 0.03;
