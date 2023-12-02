@@ -21,12 +21,12 @@ class RendererConsole : public Renderer<P, D>
     Vector<P, D> _camera;
     Triple<D> _lightsource;
     Screen _screen;
-    std::string _luminanceChars = ".,-~:;=!*#$@";
+    std::string _luminanceChars = " .,-~:;=!*#$@";
     double K_1;
     double K_2;
     std::vector<std::vector<double>> _zBuffer;
-    std::vector<std::vector<char>> _buffer;
-    std::vector<std::vector<char>> _prevBuffer;
+    std::vector<std::vector<std::uint8_t>> _buffer;
+    std::vector<std::vector<std::uint8_t>> _prevBuffer;
 
     double getLuminance(const Vector<P, D>& vector);
 };
@@ -49,14 +49,14 @@ RendererConsole<P, D>::RendererConsole(Vector<P, D> camera, Triple<D> lightsourc
     _camera.direction = _camera.direction.normalized();
     _lightsource = _lightsource.normalized();
 
-    _prevBuffer = std::vector<std::vector<char>>(_screen.height(), std::vector<char>(_screen.width(), ' '));
+    _prevBuffer = std::vector<std::vector<std::uint8_t>>(_screen.height(), std::vector<std::uint8_t>(_screen.width(), 0));
 }
 
 template <typename P, typename D>
 void RendererConsole<P, D>::render(const Shape<P, D>& shape)
 {
     _zBuffer = std::vector<std::vector<double>>(_screen.height(), std::vector<double>(_screen.width(), 0));
-    _buffer = std::vector<std::vector<char>>(_screen.height(), std::vector<char>(_screen.width(), ' '));
+    _buffer = std::vector<std::vector<std::uint8_t>>(_screen.height(), std::vector<std::uint8_t>(_screen.width(), 0));
     for (auto& vector : shape.data())
     {
         double luminance = getLuminance(vector);
@@ -70,13 +70,24 @@ void RendererConsole<P, D>::render(const Shape<P, D>& shape)
         int x_proj = _screen.width() / 2 + static_cast<int>(K_1 * ooz * vector.position.x);
         int y_proj = _screen.height() / 2 - static_cast<int>(K_1 * ooz * vector.position.y);
 
-        if (x_proj >= 0 && x_proj < _screen.width() && y_proj >= 0 && y_proj < _screen.height())
+        if ((x_proj >= 0 && x_proj < _screen.width() && y_proj >= 0 && y_proj < _screen.height()) // within the screen
+            && ooz >= _zBuffer[y_proj][x_proj]                                                    // closer to screen than previous choices
+        )
         {
-            if (ooz > _zBuffer[y_proj][x_proj])
+            // if two points are equidistant, choose the brighter one.
+            if (_zBuffer[y_proj][x_proj] == ooz)
+            {
+                // map luminance to _luminanceChars, excluding the first item (' ')
+                std::uint8_t newLumIdx = static_cast<std::uint8_t>(1 + luminance * (_luminanceChars.size() - 2));
+                // equivalent to _buffer[y_proj][x_proj] = max(_buffer[y_proj][x_proj], newLumIdx)
+                _buffer[y_proj][x_proj] = (_buffer[y_proj][x_proj] < newLumIdx) ? newLumIdx : _buffer[y_proj][x_proj];
+            }
+            else
             {
                 _zBuffer[y_proj][x_proj] = ooz;
-                int lumIdx = static_cast<int>(luminance * (_luminanceChars.size() - 1));
-                _buffer[y_proj][x_proj] = _luminanceChars[lumIdx];
+                // map luminance to _luminanceChars, excluding the first item (' ')
+                std::uint8_t newLumIdx = static_cast<std::uint8_t>(1 + luminance * (_luminanceChars.size() - 2));
+                _buffer[y_proj][x_proj] = newLumIdx;
             }
         }
     }
@@ -86,12 +97,11 @@ void RendererConsole<P, D>::render(const Shape<P, D>& shape)
     {
         for (int i = 0; i < _screen.width(); i++)
         {
-            // Display only chars that have changed
             if (_buffer[j][i] != _prevBuffer[j][i])
             {
                 // Start at (1, 1) in case of Windows user
                 rlutil::locate(i + 1, j + 1);
-                std::cout << _buffer[j][i];
+                std::cout << _luminanceChars[_buffer[j][i]];
             }
         }
     }
@@ -102,8 +112,14 @@ template <typename P, typename D>
 double RendererConsole<P, D>::getLuminance(const Vector<P, D>& vector)
 {
     Triple<D> v_norm = vector.direction.normalized();
-    // return v_norm.x * _lightsource.x + v_norm.y * _lightsource.y + v_norm.z * _lightsource.z;
-    double result = v_norm.x * _lightsource.x + v_norm.y * _lightsource.y + v_norm.z * _lightsource.z;
-    // return (result > 0) ? result : -result; // equivalent to abs(result);
-    return (result > 0) ? result : 0; // equivalent to max(result, 0);
+    double dotProduct = v_norm.x * _lightsource.x + v_norm.y * _lightsource.y + v_norm.z * _lightsource.z;
+    // the above code is equivalent to:
+    if (dotProduct > 0) // vectors with positive dot product => facing the same direction
+    {
+        return 0;
+    }
+    else // return a positive luminance
+    {
+        return -dotProduct;
+    }
 }

@@ -24,21 +24,23 @@ Torus<P, D>::Torus(P R_1, P R_2, Triple<P> center)
     static_assert(std::is_arithmetic<D>::value, "Type D must be arithmetic");
     this->Center = center;
 
-    // generate circle of radius R_1
+    // Generate hollow circle of radius R_1 in the xy-plane
     for (double xAngle = 0; xAngle < TAU; xAngle += 0.05)
     {
         P sinX = sin(xAngle);
         P cosX = cos(xAngle);
 
-        P circleX = R_2 + R_1 * cosX;
+        P circleX = R_1 * cosX + R_2;
         P circleY = R_1 * sinX;
-        // rotate circle around y-axis using radius R_2
-        for (double yAngle = 0; yAngle < 2 * TAU; yAngle += 0.02)
+
+        Triple<P> position = { circleX, circleY, 0 };
+        Triple<D> normal = { cosX, sinX, 0 };
+        // Rotate each point on the circle around the y-axis
+        for (double yAngle = 0; yAngle < TAU; yAngle += 0.02)
         {
             Matrix3x3<double> rotY = Matrix3x3<double>::rotationY(yAngle);
-            Triple<P> pos = rotY * Triple<P>{ circleX, circleY, 0 };
-            Triple<P> normal = rotY * Triple<P>{ -cosX, -sinX, 0 };
-            this->_origData.push_back(Vector<P, P>{ pos, normal });
+            this->_origData.push_back(Vector<P, D>{ rotY * position,
+                                                    rotY * normal });
         }
     }
 }

@@ -14,6 +14,8 @@ set(HEADER_FILES
 	Cube.hpp
 	Torus.hpp
 	Pyramid.hpp
+	Sphere.hpp
+	Cylinder.hpp
 	Renderer.hpp
 	RendererConsole.hpp
 	rlutil.h

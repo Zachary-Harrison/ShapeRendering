@@ -22,25 +22,36 @@ Cube<P, D>::Cube(P sideLength, Triple<P> center)
 
     P halfLen = sideLength / 2;
 
-    Triple<D> posXNormal{ 1, 0, 0 };
-    Triple<D> negXNormal{ -1, 0, 0 };
-    Triple<D> posYNormal{ 0, 1, 0 };
-    Triple<D> negYNormal{ 0, -1, 0 };
-    Triple<D> posZNormal{ 0, 0, 1 };
-    Triple<D> negZNormal{ 0, 0, -1 };
-    for (P i = -halfLen; i <= halfLen; i += 0.75)
+    // generating the top and bottom of the cube
+    for (P x = -halfLen; x <= halfLen; x += 0.75)
     {
-        for (P j = -halfLen; j <= halfLen; j += 0.75)
+        for (P y = -halfLen; y <= halfLen; y += 0.75)
         {
-            // x faces
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ -halfLen, i, j }, posXNormal));
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ halfLen, i, j }, negXNormal));
-            // y faces
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ i, -halfLen, j }, posYNormal));
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ i, halfLen, j }, negYNormal));
-            // z faces
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ i, j, -halfLen }, posZNormal));
-            this->_origData.push_back(Vector<P, P>(Triple<P>{ i, j, halfLen }, negZNormal));
+            this->_origData.push_back(Vector<P, D>(Triple<P>{ x, y, halfLen },
+                                                   Triple<D>{ 0, 0, 1 }));
+            this->_origData.push_back(Vector<P, D>(Triple<P>{ x, y, -halfLen },
+                                                   Triple<D>{ 0, 0, -1 }));
+        }
+    }
+
+    // Stack in the z-plane hollow squares in the xy-plane
+    for (P z = -halfLen; z <= halfLen; z += 0.75)
+    {
+        // x sides of hollow square
+        for (P x = -halfLen; x <= halfLen; x += 0.75)
+        {
+            this->_origData.push_back(Vector<P, D>(Triple<P>{ x, halfLen, z },
+                                                   Triple<D>{ 0, 1, 0 }));
+            this->_origData.push_back(Vector<P, D>(Triple<P>{ x, -halfLen, z },
+                                                   Triple<D>{ 0, -1, 0 }));
+        }
+        // y sides of hollow square
+        for (P y = -halfLen; y <= halfLen; y += 0.75)
+        {
+            this->_origData.push_back(Vector<P, D>(Triple<P>{ halfLen, y, z },
+                                                   Triple<D>{ 1, 0, 0 }));
+            this->_origData.push_back(Vector<P, D>(Triple<P>{ -halfLen, y, z },
+                                                   Triple<D>{ -1, 0, 0 }));
         }
     }
 }
