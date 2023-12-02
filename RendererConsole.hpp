@@ -21,9 +21,9 @@ class RendererConsole : public Renderer<P, D>
     Vector<P, D> _camera;
     Triple<D> _lightsource;
     Screen _screen;
-    std::string _luminanceChars = " .,-~:;=!*#$@";
     double K_1;
     double K_2;
+    std::string _luminanceChars = " .,-~:;=!*#$@";
     std::vector<std::vector<double>> _zBuffer;
     std::vector<std::vector<std::uint8_t>> _buffer;
     std::vector<std::vector<std::uint8_t>> _prevBuffer;

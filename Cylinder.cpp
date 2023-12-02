@@ -17,16 +17,16 @@ Cylinder::Cylinder(double height, double radius, Triple<double> center)
         for (double y = 0; y <= radius; y += 0.75)
         {
             this->_data.push_back(Vector<double, double>{ rotZ * Triple<double>{ 0, y, halfHeight },
-                                                              rotZ * Triple<double>{ 0, 0, 1 } });
+                                                          rotZ * Triple<double>{ 0, 0, 1 } });
             this->_data.push_back(Vector<double, double>{ rotZ * Triple<double>{ 0, y, -halfHeight },
-                                                              rotZ * Triple<double>{ 0, 0, -1 } });
+                                                          rotZ * Triple<double>{ 0, 0, -1 } });
         }
 
         // Rectangle side in the y-axis
         for (double z = -halfHeight; z <= halfHeight; z += 0.75)
         {
             this->_data.push_back(Vector<double, double>{ rotZ * Triple<double>{ 0, radius, z },
-                                                              rotZ * Triple<double>{ 0, 1, 0 } });
+                                                          rotZ * Triple<double>{ 0, 1, 0 } });
         }
     }
 }

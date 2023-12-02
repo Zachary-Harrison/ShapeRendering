@@ -18,7 +18,7 @@ Pyramid::Pyramid(double length, double width, double height, Triple<double> cent
         for (double y = -halfWidth; y <= halfWidth; y += 0.75)
         {
             this->_data.push_back(Vector<double, double>(Triple<double>{ x, y, halfHeight },
-                                                             Triple<double>{ 0, 0, 1 })); // base is facing upward
+                                                         Triple<double>{ 0, 0, 1 })); // base is facing upward
         }
     }
 
@@ -36,18 +36,18 @@ Pyramid::Pyramid(double length, double width, double height, Triple<double> cent
         for (double y = -widthProportion; y <= widthProportion; y += 0.75)
         {
             this->_data.push_back(Vector<double, double>(Triple<double>{ lengthProportion, y, z },
-                                                             Triple<double>{ width, 0, -halfWidth * loh }));
+                                                         Triple<double>{ width, 0, -halfWidth * loh }));
             this->_data.push_back(Vector<double, double>(Triple<double>{ -lengthProportion, y, z },
-                                                             Triple<double>{ -width, 0, -halfWidth * loh }));
+                                                         Triple<double>{ -width, 0, -halfWidth * loh }));
         }
 
         // x faces
         for (double x = -lengthProportion; x <= lengthProportion; x += 0.75)
         {
             this->_data.push_back(Vector<double, double>(Triple<double>{ x, widthProportion, z },
-                                                             Triple<double>{ 0, length, -halfWidth * loh }));
+                                                         Triple<double>{ 0, length, -halfWidth * loh }));
             this->_data.push_back(Vector<double, double>(Triple<double>{ x, -widthProportion, z },
-                                                             Triple<double>{ 0, -length, -halfWidth * loh }));
+                                                         Triple<double>{ 0, -length, -halfWidth * loh }));
         }
     }
 }

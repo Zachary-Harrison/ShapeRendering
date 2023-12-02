@@ -17,17 +17,12 @@
 int main()
 {
     // Keep these multiples of each other so that all sides are seen and rotation feels cyclic and rhythmic
-    // double X_ANGLE = 0;
-    // double Y_ANGLE = 0;
-    // double Z_ANGLE = 0;
-    double X_ANGLE = 0.025;
-    double Y_ANGLE = 0.05;
-    double Z_ANGLE = 0.0125;
+    double X_ANGLE = 0.03;
+    double Y_ANGLE = 0.02;
+    double Z_ANGLE = 0.04;
 
     Vector<double, double> camera{ 0, 0, 0, 0, 0, 1 };
-    Triple<double> lightsource{ 1, -1, 1 }; // above the shape and to the left, pointed at it
-    //  Triple<double> lightsource{ 0, -1, 1 }; // above the shape and to the left, pointed at it
-    // Triple<double> lightsource{ 0, 0, 1 }; // pointed right at the shape
+    Triple<double> lightsource{ 1, -1, 1 };
     Triple<double> shapeCenter{ 0, 0, 80 };
     Screen screen{ 80, 30, 40 };
     RendererConsole renderer{ camera, lightsource, screen, shapeCenter };
