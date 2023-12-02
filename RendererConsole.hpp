@@ -10,12 +10,12 @@
 #include <stdexcept>
 #include <vector>
 
-template <typename P, typename D> // P = PositionType, D = DirectionType
+template <typename P, typename D>
 class RendererConsole : public Renderer<P, D>
 {
   public:
     RendererConsole(Vector<P, D> camera, Triple<D> lightsource, Screen screen, Triple<P> shapeCenter);
-    void render(const Shape<P, D>& shape) override;
+    void render(const Shape& shape) override;
 
   private:
     Vector<P, D> _camera;
@@ -53,7 +53,7 @@ RendererConsole<P, D>::RendererConsole(Vector<P, D> camera, Triple<D> lightsourc
 }
 
 template <typename P, typename D>
-void RendererConsole<P, D>::render(const Shape<P, D>& shape)
+void RendererConsole<P, D>::render(const Shape& shape)
 {
     _zBuffer = std::vector<std::vector<double>>(_screen.height(), std::vector<double>(_screen.width(), 0));
     _buffer = std::vector<std::vector<std::uint8_t>>(_screen.height(), std::vector<std::uint8_t>(_screen.width(), 0));

@@ -34,12 +34,19 @@ int main()
     Screen screen{ 80, 30, 40 };
     RendererConsole renderer{ camera, lightsource, screen, shapeCenter };
 
-    std::vector<std::unique_ptr<Shape<double, double>>> shapes;
-    shapes.push_back(std::make_unique<Cube<double, double>>(30, shapeCenter));
-    shapes.push_back(std::make_unique<Torus<double, double>>(7, 15, shapeCenter));
-    shapes.push_back(std::make_unique<Pyramid<double, double>>(30, 40, 30, shapeCenter));
-    shapes.push_back(std::make_unique<Sphere<double, double>>(20, shapeCenter));
-    shapes.push_back(std::make_unique<Cylinder<double, double>>(30, 15, shapeCenter));
+    std::vector<std::unique_ptr<Shape>> shapes;
+    shapes.push_back(std::make_unique<Cube>(30, shapeCenter));
+    shapes.push_back(std::make_unique<Torus>(7, 15, shapeCenter));
+    shapes.push_back(std::make_unique<Pyramid>(30, 40, 30, shapeCenter));
+    shapes.push_back(std::make_unique<Sphere>(20, shapeCenter));
+    shapes.push_back(std::make_unique<Cylinder>(30, 15, shapeCenter));
+
+    // std::vector<std::unique_ptr<Shape<double, double>>> shapes;
+    // shapes.push_back(std::make_unique<Cube<double, double>>(30, shapeCenter));
+    // shapes.push_back(std::make_unique<Torus<double, double>>(7, 15, shapeCenter));
+    // shapes.push_back(std::make_unique<Pyramid<double, double>>(30, 40, 30, shapeCenter));
+    // shapes.push_back(std::make_unique<Sphere<double, double>>(20, shapeCenter));
+    // shapes.push_back(std::make_unique<Cylinder<double, double>>(30, 15, shapeCenter));
     int currentShapeIndex = 0;
 
     double xAngle = 0;

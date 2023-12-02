@@ -21,6 +21,12 @@ set(HEADER_FILES
 	rlutil.h
 )
 set(SOURCE_FILES 
+	Shape.cpp
+	Cube.cpp
+	Torus.cpp
+	Pyramid.cpp
+	Sphere.cpp
+	Cylinder.cpp
 	Screen.cpp
 )
 set(UNIT_TEST_FILES 

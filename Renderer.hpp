@@ -6,7 +6,7 @@ template <typename P, typename D> // P = PositionType, D = DirectionType
 class Renderer
 {
   public:
-    virtual void render(const Shape<P, D>& shape) = 0;
+    virtual void render(const Shape& shape) = 0;
     void togglePause();
     bool isPaused();
 
