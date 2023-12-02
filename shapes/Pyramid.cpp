@@ -32,7 +32,6 @@ Pyramid::Pyramid(Triple<double> center, double length, double width, double heig
         double widthProportion = deltaH * woh / 2;
         double lengthProportion = deltaH * loh / 2;
 
-        // y faces
         for (double y = -widthProportion; y <= widthProportion; y += 0.75)
         {
             this->_data.push_back(Vector<double, double>(Triple<double>{ lengthProportion, y, z },
@@ -41,7 +40,6 @@ Pyramid::Pyramid(Triple<double> center, double length, double width, double heig
                                                          Triple<double>{ -width, 0, -halfWidth * loh }));
         }
 
-        // x faces
         for (double x = -lengthProportion; x <= lengthProportion; x += 0.75)
         {
             this->_data.push_back(Vector<double, double>(Triple<double>{ x, widthProportion, z },

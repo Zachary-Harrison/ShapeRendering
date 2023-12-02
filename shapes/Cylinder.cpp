@@ -13,7 +13,7 @@ Cylinder::Cylinder(Triple<double> center, double height, double radius)
     for (double yAngle = 0; yAngle < TAU; yAngle += 0.02)
     {
         Matrix3x3<double> rotZ = Matrix3x3<double>::rotationZ(yAngle);
-        // todouble andouble bottom of rectangle
+        // Top and bottom of rectangle
         for (double y = 0; y <= radius; y += 0.75)
         {
             this->_data.push_back(Vector<double, double>{ rotZ * Triple<double>{ 0, y, halfHeight },

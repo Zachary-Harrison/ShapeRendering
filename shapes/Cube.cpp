@@ -9,7 +9,7 @@ Cube::Cube(Triple<double> center, double sideLength)
 
     double halfLen = sideLength / 2;
 
-    // generating the todouble and bottom of the cube
+    // generating the top and bottom of the cube
     for (double x = -halfLen; x <= halfLen; x += 0.75)
     {
         for (double y = -halfLen; y <= halfLen; y += 0.75)

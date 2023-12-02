@@ -14,13 +14,13 @@ class Renderer
     bool _isPaused = false;
 };
 
-template <typename P, typename D>
+template <typename P, typename D> // P = PositionType, D = DirectionType
 void Renderer<P, D>::togglePause()
 {
     _isPaused = !_isPaused;
 }
 
-template <typename P, typename D>
+template <typename P, typename D> // P = PositionType, D = DirectionType
 bool Renderer<P, D>::isPaused()
 {
     return _isPaused;

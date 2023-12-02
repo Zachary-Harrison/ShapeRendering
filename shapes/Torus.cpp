@@ -20,6 +20,7 @@ Torus::Torus(Triple<double> center, double R_1, double R_2)
 
         Triple<double> position = { circleX, circleY, 0 };
         Triple<double> normal = { cosX, sinX, 0 };
+
         // Rotate each point on the circle around the y-axis
         for (double yAngle = 0; yAngle < TAU; yAngle += 0.02)
         {
