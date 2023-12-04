@@ -1,7 +1,7 @@
 # ShapeRendering
 
-<video src='demo.mp4' width=180></video>
-
+![demo.gif](demo.gif)
+<br> *You can use left/right arrow keys to move between shapes! Neat, huh?*
 
 ### Similar Projects
 
