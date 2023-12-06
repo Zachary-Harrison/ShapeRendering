@@ -11,7 +11,7 @@
 #include <vector>
 
 template <typename P, typename D> // P = PositionType, D = DirectionType
-class RendererConsole : public Renderer<P, D>
+class RendererConsole : public Renderer
 {
   public:
     RendererConsole(Vector<P, D> camera, Triple<D> lightsource, Screen screen, Triple<P> shapeCenter);

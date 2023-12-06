@@ -27,8 +27,8 @@ int main()
         });
 
     // Keep these multiples of each other so that all sides are seen and rotation feels cyclic and rhythmic
-    double X_ANGLE = 0.03;
-    double Y_ANGLE = 0.02;
+    double X_ANGLE = 0.02;
+    double Y_ANGLE = 0.03;
     double Z_ANGLE = 0.04;
 
     Vector<double, double> camera{ 0, 0, 0, 0, 0, 1 };
@@ -63,7 +63,7 @@ int main()
             // don't render faster than 60 FPS
             auto end = std::chrono::high_resolution_clock::now();
             auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start).count();
-            int sleepTime = 16 - duration;
+            int sleepTime = 16 - static_cast<int>(duration);
             if (sleepTime > 0)
             {
                 std::this_thread::sleep_for(std::chrono::milliseconds(sleepTime));
@@ -85,11 +85,11 @@ int main()
             }
             else if (key == rlutil::KEY_LEFT)
             {
-                currentShapeIndex = (currentShapeIndex - 1 + shapes.size()) % shapes.size();
+                currentShapeIndex = (currentShapeIndex - 1 + static_cast<int>(shapes.size())) % static_cast<int>(shapes.size());
             }
             else if (key == rlutil::KEY_RIGHT)
             {
-                currentShapeIndex = (currentShapeIndex + 1) % shapes.size();
+                currentShapeIndex = (currentShapeIndex + 1) % static_cast<int>(shapes.size());
             }
         }
     }
