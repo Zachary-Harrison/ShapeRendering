@@ -6,9 +6,9 @@
 ## Build Instructions
 
 1. Ensure you have the following installed:
+   - [CMake](https://cmake.org/download/): version 3.12 or later.
    - Either [GCC](https://gcc.gnu.org/install/download.html) (version 10 or later) or [Clang](https://releases.llvm.org/download.html) (version 10 or later). 
-   > **Note:** Windows users might prefer to use Microsoft's build tools.
-   - [CMake](https://cmake.org/download/): version 3.12 or later
+      > **Note:** Windows users might prefer to use Microsoft's build tools like [Visual Studio](https://visualstudio.microsoft.com/downloads/).
 2. Clone this repository and enter it:
    ```bash
    git clone https://github.com/Zachary-Harrison/ShapeRendering.git && cd ShapeRendering/
@@ -37,5 +37,5 @@
 
 ## Similar Projects
 
-- [cube.c](https://github.com/servetgulnaroglu/cube.c) by [servetgulnaroglu](https://github.com/servetgulnaroglu). This was coded live, which can be seen [here on youtube](https://youtu.be/p09i_hoFdd0).
+- [cube.c](https://github.com/servetgulnaroglu/cube.c) by [servetgulnaroglu](https://github.com/servetgulnaroglu). 
 - [Donut Mark II](https://www.a1k0n.net/2011/07/20/donut-math.html) by Andy Sloane. 
