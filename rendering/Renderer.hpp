@@ -1,6 +1,6 @@
 #pragma once
 
-#include "shapes/Shape.hpp"
+#include "../shapes/Shape.hpp"
 
 class Renderer
 {

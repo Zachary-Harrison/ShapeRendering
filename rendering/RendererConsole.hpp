@@ -1,9 +1,9 @@
 #pragma once
 
 #include "Renderer.hpp"
-#include "rendering/Screen.hpp"
-#include "utils/Vector.hpp"
-#include "utils/rlutil.h"
+#include "Screen.hpp"
+#include "../utils/Vector.hpp"
+#include "../utils/rlutil.h"
 
 #include <array>
 #include <cstdint>
