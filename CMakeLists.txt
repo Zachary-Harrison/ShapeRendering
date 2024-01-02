@@ -6,15 +6,15 @@ set(UNIT_TEST_RUNNER UnitTestRunner)
 project(${PROJECT})
 
 set(HEADER_FILES 
-	Screen.hpp
 	shapes/Shape.hpp
 	shapes/Cube.hpp
 	shapes/Torus.hpp
 	shapes/Pyramid.hpp
 	shapes/Sphere.hpp
 	shapes/Cylinder.hpp
-	Renderer.hpp
-	RendererConsole.hpp
+	rendering/Screen.hpp
+	rendering/Renderer.hpp
+	rendering/RendererConsole.hpp
 	utils/rlutil.h
 	utils/Matrix3x3.hpp
 	utils/Vector.hpp
@@ -27,7 +27,7 @@ set(SOURCE_FILES
 	shapes/Pyramid.cpp
 	shapes/Sphere.cpp
 	shapes/Cylinder.cpp
-	Screen.cpp
+	rendering/Screen.cpp
 )
 set(UNIT_TEST_FILES 
 	TestShapes.cpp

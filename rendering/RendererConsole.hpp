@@ -1,7 +1,7 @@
 #pragma once
 
 #include "Renderer.hpp"
-#include "Screen.hpp"
+#include "rendering/Screen.hpp"
 #include "utils/Vector.hpp"
 #include "utils/rlutil.h"
 

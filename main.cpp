@@ -1,5 +1,5 @@
-#include "RendererConsole.hpp"
-#include "Screen.hpp"
+#include "rendering/RendererConsole.hpp"
+#include "rendering/Screen.hpp"
 #include "shapes/Cube.hpp"
 #include "shapes/Cylinder.hpp"
 #include "shapes/Pyramid.hpp"
